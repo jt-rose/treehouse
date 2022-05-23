@@ -3,11 +3,14 @@
 use std::io::stdin;
 
 fn get_name() -> String {
+    // ask user for their name
     let mut your_name = String::new();
     stdin()
         .read_line(&mut your_name)
         .expect("Failed to read line");
-    your_name
+
+    // return formatted name
+    your_name.trim().to_lowercase()
 }
 
 fn main() {
@@ -15,5 +18,5 @@ fn main() {
 
     let name = get_name();
 
-    println!("Hello {}", &name);
+    println!("Hello {}!", &name);
 }
