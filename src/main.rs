@@ -7,7 +7,7 @@ fn main() {
 
     let name = get_name();
 
-    let visitor_list = [
+    let visitor_list = vec![
         Visitor::new("Frodo", "safe travels, Frodo!"),
         Visitor::new("Gandalf", "Well met, old wizard"),
         Visitor:: new("Aragon", "Hail to the future king!")
@@ -20,6 +20,8 @@ fn main() {
     }
 }
 
+// set up automatic debug printing
+#[derive(Debug)]
 struct Visitor {
     name: String,
     greeting: String,
