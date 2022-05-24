@@ -3,21 +3,33 @@
 use std::io::stdin;
 
 fn main() {
-    println!("Hello, what is your name?");
-
-    let name = get_name();
-
-    let visitor_list = vec![
+    let mut visitor_list = vec![
         Visitor::new("Frodo", "safe travels, Frodo!"),
         Visitor::new("Gandalf", "Well met, old wizard"),
-        Visitor:: new("Aragon", "Hail to the future king!")
+        Visitor::new("Aragon", "Hail to the future king!"),
     ];
 
-    let known_visitor = visitor_list.iter().find(|visitor| visitor.name == name);
-    match known_visitor {
-        Some(visitor) => visitor.greet_visitor(),
-        None => println!("You aren't on the list!"),
+    loop {
+        println!("Hello, what is your name?");
+
+        let name = get_name();
+
+        let known_visitor = visitor_list.iter().find(|visitor| visitor.name == name);
+        match known_visitor {
+            Some(visitor) => visitor.greet_visitor(),
+            None => {
+                if name.is_empty() {
+                    break;
+                }
+                println!("{} isn't on the visitor list!", capitalize(&name));
+                let new_visitor = Visitor::new(&name, "Hello new friend!");
+                visitor_list.push(new_visitor);
+            }
+        }
     }
+
+    println!("the final list of visitors:");
+    println!("{:#?}", visitor_list);
 }
 
 // set up automatic debug printing
@@ -53,12 +65,10 @@ fn get_name() -> String {
 
 // Capitalizes the first character in s.
 // referenced from https://nick.groenen.me/notes/capitalize-a-string-in-rust/
-// pub fn capitalize(s: &str) -> String {
-//     let mut c = s.chars();
-//     match c.next() {
-//         None => String::new(),
-//         Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
-//     }
-// }
-
-
+pub fn capitalize(s: &str) -> String {
+    let mut c = s.chars();
+    match c.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+    }
+}
