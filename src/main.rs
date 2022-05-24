@@ -13,6 +13,16 @@ fn get_name() -> String {
     your_name.trim().to_lowercase()
 }
 
+/// Capitalizes the first character in s.
+/// referenced from https://nick.groenen.me/notes/capitalize-a-string-in-rust/
+pub fn capitalize(s: &str) -> String {
+    let mut c = s.chars();
+    match c.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+    }
+}
+
 fn main() {
     println!("Hello, what is your name?");
 
@@ -28,7 +38,7 @@ fn main() {
     }
 
     if allow_in {
-        println!("Welcome to the club, {}", name);
+        println!("Welcome to the club, {}!", capitalize(&name));
     } else {
         println!("Scram!");
     }
