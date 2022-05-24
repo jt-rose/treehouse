@@ -4,9 +4,10 @@ use std::io::stdin;
 
 fn main() {
     let mut visitor_list = vec![
-        Visitor::new("Frodo", "safe travels, Frodo!"),
-        Visitor::new("Gandalf", "Well met, old wizard"),
-        Visitor::new("Aragon", "Hail to the future king!"),
+        Visitor::new("Frodo", VisitorAction::AcceptWithNote { note: String::from("no mead for this one yet")}, 16),
+        Visitor::new("Gandalf", VisitorAction::Accept, 99),
+        Visitor::new("Aragon", VisitorAction::Accept, 30),
+        Visitor::new("Orc", VisitorAction::Refuse, 1),
     ];
 
     loop {
@@ -22,7 +23,7 @@ fn main() {
                     break;
                 }
                 println!("{} isn't on the visitor list!", capitalize(&name));
-                let new_visitor = Visitor::new(&name, "Hello new friend!");
+                let new_visitor = Visitor::new(&name, VisitorAction::Probation, 0);
                 visitor_list.push(new_visitor);
             }
         }
@@ -44,19 +45,33 @@ enum VisitorAction {
 #[derive(Debug)]
 struct Visitor {
     name: String,
-    greeting: String,
+    action: VisitorAction,
+    age: i32,
 }
 
 impl Visitor {
-    fn new(name: &str, greeting: &str) -> Self {
+    fn new(name: &str, action: VisitorAction, age: i32) -> Self {
         Self {
             name: name.to_lowercase(),
-            greeting: greeting.to_string(),
+            action,
+            age
         }
     }
 
     fn greet_visitor(&self) {
-        println!("{}", self.greeting);
+        match &self.action {
+            VisitorAction::Accept => println!("Welcome to the tavern, {}", &self.name),
+            VisitorAction::AcceptWithNote { note } => {
+                println!("Welcome to the tavern, {}", &self.name);
+                println!("{}", note);
+                if self.age < 18 {
+                    println!("No mead for this young one yet!");
+                }
+
+            },
+            VisitorAction::Probation => println!("{} is now a probationary member", self.name),
+            VisitorAction::Refuse => println!("We don't serve your kind here, foul monster!")
+        }
     }
 }
 
