@@ -18,5 +18,18 @@ fn main() {
 
     let name = get_name();
 
-    println!("Hello {}!", &name);
+    let visitor_list = ["frodo", "gandalf", "aragon"];
+    let mut allow_in = false;
+
+    for visitor in &visitor_list {
+        if &name == visitor {
+            allow_in = true;
+        }
+    }
+
+    if allow_in {
+        println!("Welcome to the club, {}", name);
+    } else {
+        println!("Scram!");
+    }
 }
