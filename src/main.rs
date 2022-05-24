@@ -10,7 +10,7 @@ fn main() {
     ];
 
     loop {
-        println!("Hello, what is your name?");
+        println!("Hello, what is your name? (leave EMPTY and press enter to quit)");
 
         let name = get_name();
 
@@ -30,6 +30,14 @@ fn main() {
 
     println!("the final list of visitors:");
     println!("{:#?}", visitor_list);
+}
+
+#[derive(Debug)]
+enum VisitorAction {
+    Accept,
+    AcceptWithNote { note: String },
+    Refuse,
+    Probation,
 }
 
 // set up automatic debug printing
