@@ -2,6 +2,24 @@
 
 use std::io::stdin;
 
+fn main() {
+    println!("Hello, what is your name?");
+
+    let name = get_name();
+
+    let visitor_list = [
+        Visitor::new("Frodo", "safe travels, Frodo!"),
+        Visitor::new("Gandalf", "Well met, old wizard"),
+        Visitor:: new("Aragon", "Hail to the future king!")
+    ];
+
+    let known_visitor = visitor_list.iter().find(|visitor| visitor.name == name);
+    match known_visitor {
+        Some(visitor) => visitor.greet_visitor(),
+        None => println!("You aren't on the list!"),
+    }
+}
+
 struct Visitor {
     name: String,
     greeting: String,
@@ -31,30 +49,14 @@ fn get_name() -> String {
     your_name.trim().to_lowercase()
 }
 
-/// Capitalizes the first character in s.
-/// referenced from https://nick.groenen.me/notes/capitalize-a-string-in-rust/
-pub fn capitalize(s: &str) -> String {
-    let mut c = s.chars();
-    match c.next() {
-        None => String::new(),
-        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
-    }
-}
+// Capitalizes the first character in s.
+// referenced from https://nick.groenen.me/notes/capitalize-a-string-in-rust/
+// pub fn capitalize(s: &str) -> String {
+//     let mut c = s.chars();
+//     match c.next() {
+//         None => String::new(),
+//         Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+//     }
+// }
 
-fn main() {
-    println!("Hello, what is your name?");
 
-    let name = get_name();
-
-    let visitor_list = [
-        Visitor::new("Frodo", "safe travels, Frodo!"),
-        Visitor::new("Gandalf", "Well met, old wizard"),
-        Visitor:: new("Aragon", "Hail to the future king!")
-    ];
-
-    let known_visitor = visitor_list.iter().find(|visitor| visitor.name == name);
-    match known_visitor {
-        Some(visitor) => visitor.greet_visitor(),
-        None => println!("You aren't on the list!"),
-    }
-}
